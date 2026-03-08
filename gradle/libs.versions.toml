@@ -46,7 +46,7 @@ androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", 
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
 # ─── Gemini AI (kept for direct use if needed) ───
-google-generativeai = { group = "com.google.ai.client", name = "generativeai", version.ref = "generativeai" }
+google-generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 # ─── Navigation ───
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 # ─── Networking (Retrofit + Gson) ───
