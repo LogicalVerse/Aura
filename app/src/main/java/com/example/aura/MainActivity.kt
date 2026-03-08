@@ -5,43 +5,43 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.aura.data.remote.GeminiServiceImpl
+import com.example.aura.data.repository.AuraRepository
+import com.example.aura.ui.navigation.AuraNavGraph
 import com.example.aura.ui.theme.AuraTheme
 
+/**
+ * Main entry point for the Aura app.
+ *
+ * Sets up the Gemini service, repository, and navigation graph.
+ * For hackathon speed we create dependencies manually here.
+ * In production, use Hilt for dependency injection.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // ─── Initialize dependencies ─────────────────────
+        // API key from BuildConfig (set in local.properties)
+        val apiKey = BuildConfig.GEMINI_API_KEY
+
+        val geminiService = GeminiServiceImpl(apiKey)
+        val repository = AuraRepository(geminiService)
+
+        // ─── Set up UI ───────────────────────────────────
         setContent {
             AuraTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AuraNavGraph(repository = repository)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AuraTheme {
-        Greeting("Android")
     }
 }
